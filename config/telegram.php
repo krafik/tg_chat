@@ -14,6 +14,7 @@ return [
     |
     */
     'bot_token' => env('TELEGRAM_BOT_TOKEN', '5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk'),
+//    'bot_token' => env('5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk', '5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk'),
 
     /*
     |--------------------------------------------------------------------------

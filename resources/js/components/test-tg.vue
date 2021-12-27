@@ -8,7 +8,7 @@
         </div>
 
         <button @click="getMe">getInfo</button>
-        <button @click="getUpdateSec">getUpdateSec</button>
+        <button @click="getUpdate">getUpdate</button>
         <button @click="setMyCommand">setMyCommand</button>
         <button @click="getMyCommands">getMyCommand</button>
         <button @click="unswer">unswer</button>
@@ -24,7 +24,7 @@
                 token: '5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk',
                 http: 'https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe',
                 infoBot: [],
-                updates: [],
+                updates: null,
                 chat_id: [],
                 commands: [{"command": "a", "description": "sey hello"}, {"command": "b", "description": "sey bie"}]
             }
@@ -38,9 +38,10 @@
             },
             getUpdate: function () {
                 axios.get(`https://api.telegram.org/bot${this.token}/getUpdates?offset=-1`).then((t) => {
-                    this.updates = t.result['0']
+                    this.updates = t.result
                     this.chat_id = t.result['0'].message.chat.id
-                    console.log(t.result['0'].message.chat.id)
+                    console.log(t.result.message.chat.id)
+                    console.log(typeof(this.updates))
                 })
             },
             getUpdateSec: function () {

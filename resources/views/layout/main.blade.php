@@ -1,3 +1,10 @@
+<?
+use Telegram\Bot\Api;
+//use Telegram\Bot\Laravel\Facades\Telegram;
+//$telegram = new Api('5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk');
+
+?>
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -55,6 +62,8 @@
         </div>
     </nav>
     @yield('content')
+
+<!--    --><?// $response = Telegram::getMe();?>
 </div>
 <script src="{{asset('asset/js/jquery.js')}}"></script>
 <script src="{{asset('asset/js/bootstrap.min.js')}}"></script>

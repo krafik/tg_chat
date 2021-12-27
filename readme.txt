@@ -18,7 +18,7 @@
 
 
 t.me/laraTgBot
-
+git: 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
 token: 5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk
 
 {"ok":true,

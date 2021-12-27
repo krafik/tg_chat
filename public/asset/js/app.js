@@ -1985,6 +1985,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 //
 //
 //
@@ -2010,7 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
       token: '5030298765:AAEEfMBVVWa1ooINKP2HB0cLZiFIsLZj2Xk',
       http: 'https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe',
       infoBot: [],
-      updates: [],
+      updates: null,
       chat_id: [],
       commands: [{
         "command": "a",
@@ -2032,9 +2034,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("https://api.telegram.org/bot".concat(this.token, "/getUpdates?offset=-1")).then(function (t) {
-        _this.updates = t.result['0'];
+        _this.updates = t.result;
         _this.chat_id = t.result['0'].message.chat.id;
-        console.log(t.result['0'].message.chat.id);
+        console.log(t.result.message.chat.id);
+        console.log(_typeof(_this.updates));
       });
     },
     getUpdateSec: function getUpdateSec() {
@@ -20568,7 +20571,7 @@ var render = function () {
     _vm._v(" "),
     _c("button", { on: { click: _vm.getMe } }, [_vm._v("getInfo")]),
     _vm._v(" "),
-    _c("button", { on: { click: _vm.getUpdateSec } }, [_vm._v("getUpdateSec")]),
+    _c("button", { on: { click: _vm.getUpdate } }, [_vm._v("getUpdate")]),
     _vm._v(" "),
     _c("button", { on: { click: _vm.setMyCommand } }, [_vm._v("setMyCommand")]),
     _vm._v(" "),
