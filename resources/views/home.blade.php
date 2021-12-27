@@ -3,4 +3,8 @@
 @section('content')
     <test-tg></test-tg>
     <chat-modal></chat-modal>
+    <?
+
+
+    ?>
 @endsection
