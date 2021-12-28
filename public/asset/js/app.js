@@ -2004,6 +2004,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "test-tg",
   data: function data() {
@@ -2069,6 +2073,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       // messages.createChat
       axios.get("".concat(this.tgApi, "/bot").concat(this.token, "/messages.createChat")).then(function (t) {
         console.log(t);
+      });
+    },
+    setWebhook: function setWebhook() {
+      axios.get("".concat(this.tgApi, "/bot").concat(this.token, "/setWebhook?url=https://chatbot.1t.ws:443/bot.php")).then(function (t) {
+        console.log(t);
+      });
+    },
+    getWebhookInfo: function getWebhookInfo() {
+      axios.get("".concat(this.tgApi, "/bot").concat(this.token, "/getWebhookInfo?url=https://chatbot.1t.ws/bot.php")).then(function (t) {
+        console.log(t);
+      });
+    },
+    removeWebhook: function removeWebhook() {
+      axios.get("".concat(this.tgApi, "/bot").concat(this.token, "/deleteWebhook")).then(function (t) {
+        return console.log(t);
+      });
+    },
+    removeKeyboard: function removeKeyboard() {
+      axios.get("".concat(this.tgApi, "/bot").concat(this.token, "/ReplyKeyboardRemove?true")).then(function (t) {
+        return console.log(t);
       });
     }
   }
@@ -20580,6 +20604,20 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("button", { on: { click: _vm.unswer } }, [_vm._v("unswer")]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.setWebhook } }, [_vm._v("setWebhook")]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.getWebhookInfo } }, [
+      _vm._v("getWebhookInfo"),
+    ]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.removeWebhook } }, [
+      _vm._v("removeWebhook"),
+    ]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.removeKeyboard } }, [
+      _vm._v("removeKeyboard"),
+    ]),
   ])
 }
 var staticRenderFns = []

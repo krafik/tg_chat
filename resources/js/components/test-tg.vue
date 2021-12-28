@@ -3,7 +3,7 @@
         <p> test tg component</p>
         <p>info about bot</p>
         <div class="flex">
-<!--            <pre>{{infoBot}}</pre>-->
+            <!--            <pre>{{infoBot}}</pre>-->
             <pre>{{updates}}</pre>
         </div>
 
@@ -12,6 +12,10 @@
         <button @click="setMyCommand">setMyCommand</button>
         <button @click="getMyCommands">getMyCommand</button>
         <button @click="unswer">unswer</button>
+        <button @click="setWebhook">setWebhook</button>
+        <button @click="getWebhookInfo">getWebhookInfo</button>
+        <button @click="removeWebhook">removeWebhook</button>
+        <button @click="removeKeyboard">removeKeyboard</button>
     </div>
 </template>
 
@@ -41,7 +45,7 @@
                     this.updates = t.result
                     this.chat_id = t.result['0'].message.chat.id
                     console.log(t.result.message.chat.id)
-                    console.log(typeof(this.updates))
+                    console.log(typeof (this.updates))
                 })
             },
             getUpdateSec: function () {
@@ -75,6 +79,22 @@
                 axios.get(`${this.tgApi}/bot${this.token}/messages.createChat`).then((t) => {
                     console.log(t)
                 })
+            },
+            setWebhook: function () {
+                axios.get(`${this.tgApi}/bot${this.token}/setWebhook?url=https://chatbot.1t.ws:443/bot.php`).then((t) => {
+                    console.log(t)
+                })
+            },
+            getWebhookInfo: function () {
+                axios.get(`${this.tgApi}/bot${this.token}/getWebhookInfo?url=https://chatbot.1t.ws/bot.php`).then((t) => {
+                    console.log(t)
+                });
+            },
+            removeWebhook: function () {
+                axios.get(`${this.tgApi}/bot${this.token}/deleteWebhook`).then((t) => console.log(t))
+            },
+            removeKeyboard: function () {
+                axios.get(`${this.tgApi}/bot${this.token}/ReplyKeyboardRemove?true`).then((t) => console.log(t))
             }
 
         }
