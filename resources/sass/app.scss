@@ -47,29 +47,6 @@
     flex-direction: column;
 
   }
-
-  .msg-bot, .msg-user {
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px 0;
-    color: #fff;
-  }
-
-  .msg-bot {
-    background-color: #3679F7;
-    align-self: flex-start;
-  }
-
-  .msg-user {
-    background-color: #1595C2;
-    align-self: flex-end;
-  }
-  .msg-bot_time, .msg-user_time{
-    font-size: 10px;
-  }
-  .msg-bot_time{
-
-  }
 }
 
 

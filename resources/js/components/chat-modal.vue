@@ -3,58 +3,37 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-face mr-2"><img src="asset/img/man-medium-light-skin-tone.svg"
-                                                      alt=""></div>
+                    <div class="modal-face mr-2">
+                        <div class="flex avatar"
+                             style="background-image: url('/asset/img/man-medium-light-skin-tone.svg');"></div>
+                    </div>
                     <h5 class="modal-title" id="exampleModalLabel">Bot</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div v-for="item in historyMessage"
-                         :class="{'msg-bot': item.from === 'manager', 'msg-user': item.from ==='user'}">
-                        <div :class="{'msg-bot_header': item.from === 'manager', 'msg-user_header': item.from ==='user'}"
-                             style="font-size: 10px">
-                            {{item.from}}
-                        </div>
-                        <div :class="{'msg-bot_body': item.from === 'manager', 'msg-user_body': item.from ==='user'}">
-                            hi, i'm a {{item.from}}
-                        </div>
-
-                        <div :class="{'msg-bot_time': item.from === 'manager', 'msg-user_time': item.from ==='user'}">
-                            15:20
-                        </div>
-                    </div>
-
+                <div class="modal-body" ref="body">
+                    <template v-for="(item, index) in historyMessage">
+                        <chat_item :item="item" :key="index" :id="index"/>
+                    </template>
                 </div>
                 <div class="modal-footer md-f">
-                    <input type="text" class="form-control" placeholder="Введите текст" v-model="msg">
-                    <!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                    <input type="text" class="form-control" placeholder="Введите текст" v-model.trim="entryMsg"
+                           @keyup.enter="addToHistory">
                     <button @click="addToHistory" type="button" class="btn btn-primary">Ok</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--                    <div class="msg-bot">-->
-    <!--                        <div class="msg-bot_body"> hi, i'm a bot</div>-->
-    <!--                        <div class="msg-bot_time">15:20</div>-->
-    <!--                    </div>-->
-    <!--                    <div class="msg-user">-->
-    <!--                        <div class="msg-user_body">-->
-    <!--                            hi, i'm a user-->
-    <!--                        </div>-->
-    <!--                        <div class="msg-user_time">-->
-    <!--                            15:21-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-
-
 </template>
 
 <script>
+    import Chat_item from "./chat_modal/chat_item";
+
     export default {
         name: "chat-modal",
+        components: {Chat_item},
         data() {
             return {
                 historyMessage: [
@@ -69,18 +48,37 @@
                         time: '15:23'
                     }
                 ],
-                msg: {}
+                entryMsg: '',
             }
         },
         methods: {
             addToHistory: function () {
-                console.log(this.msg)
-                this.historyMessage.push(this.msg)
+                if (!this.entryMsg) {
+                    return false;
+                }
+
+                let date = new Date();
+                this.historyMessage.push({
+                    from: 'user',
+                    text: this.entryMsg,
+                    time: `${date.getHours()}: ${date.getMinutes()}`
+                });
+                this.entryMsg = "";
+
+                window.setTimeout(() => {
+                    $('.msg:last', this.$refs.body).eq(0)[0].scrollIntoView({behavior: 'smooth', block: 'end'});
+                }, 100);
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .avatar {
+        background-size: cover;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        height: 30px;
+        width: 30px;
+    }
 </style>

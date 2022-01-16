@@ -386,26 +386,3 @@ template {
   flex-direction: column;
 }
 
-.modal-msg .msg-bot,
-.modal-msg .msg-user {
-  padding: 5px;
-  border-radius: 5px;
-  margin: 5px 0;
-  color: #fff;
-}
-
-.modal-msg .msg-bot {
-  background-color: #3679F7;
-  align-self: flex-start;
-}
-
-.modal-msg .msg-user {
-  background-color: #1595C2;
-  align-self: flex-end;
-}
-
-.modal-msg .msg-bot_time,
-.modal-msg .msg-user_time {
-  font-size: 10px;
-}
-
