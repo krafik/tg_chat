@@ -1933,6 +1933,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _templates_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates.json */ "./resources/js/templates.json");
 var _templates_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../templates.json */ "./resources/js/templates.json", 1);
 /* harmony import */ var _chat_typing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chat-typing */ "./resources/js/components/chat-typing.vue");
+/* harmony import */ var _configs_answers_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../configs/answers.json */ "./resources/js/configs/answers.json");
+var _configs_answers_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../configs/answers.json */ "./resources/js/configs/answers.json", 1);
 //
 //
 //
@@ -1964,6 +1966,10 @@ var _templates_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webp
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -2000,7 +2006,8 @@ var _templates_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webp
         return false;
       }
 
-      this.addMessage('user', this.entryMsg);
+      var message = this.entryMsg;
+      this.addMessage(message, 'user');
       this.entryMsg = "";
       window.setTimeout(function () {
         $('.msg:last', _this.$refs.body).eq(0)[0].scrollIntoView({
@@ -2008,10 +2015,10 @@ var _templates_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webp
           block: 'end'
         });
       }, 100);
+      this.answer(message);
     },
-    addMessage: function addMessage() {
-      var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'bot';
-      var text = arguments.length > 1 ? arguments[1] : undefined;
+    addMessage: function addMessage(text) {
+      var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'manager';
       var date = new Date();
       this.historyMessage.push({
         from: target,
@@ -2019,21 +2026,62 @@ var _templates_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webp
         time: "".concat(date.getHours(), ": ").concat(date.getMinutes())
       });
     },
-    hello: function hello() {
+    answer: function answer(message) {
+      var result = [];
+
+      _.forEach(_configs_answers_json__WEBPACK_IMPORTED_MODULE_3__, function (answer) {
+        var reg = new RegExp(answer.regexp, 'ig');
+
+        if (reg.test(message)) {
+          result.push(answer.answer);
+        }
+      });
+
+      if (result.length === 0) {
+        result.push('Моя твоя не понимать!))');
+      }
+
+      var result_text = result.join("\r\n");
+      this.type(result_text, result_text.length / 4 * 200);
+    },
+    type: function type(message) {
       var _this2 = this;
 
+      var timer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
       this.typing = true;
+      var in_position = this.$refs.body.scrollHeight - this.$refs.body.scrollTop - this.$refs.body.clientHeight < 100;
+
+      if (in_position) {
+        window.setTimeout(function () {
+          $('.typing', _this2.$refs.body).eq(0)[0].scrollIntoView({
+            behavior: 'smooth',
+            block: 'end'
+          });
+        }, 100);
+      }
+
       window.setTimeout(function () {
         _this2.typing = false;
 
-        _this2.addMessage('bot', 'Hello');
-      }, 1000);
+        _this2.addMessage(message);
+
+        var in_position = _this2.$refs.body.scrollHeight - _this2.$refs.body.scrollTop - _this2.$refs.body.clientHeight < 100;
+
+        if (in_position) {
+          window.setTimeout(function () {
+            $('.msg:last', _this2.$refs.body).eq(0)[0].scrollIntoView({
+              behavior: 'smooth',
+              block: 'end'
+            });
+          }, 100);
+        }
+      }, timer);
     }
   },
   watch: {
     'show.chat': function showChat(n) {
       if (n && !this.show.first) {
-        this.hello();
+        this.type('Hello');
         this.show.first = true; // // this.show.seccond = '2';
         // Vue.set(this.show, 'seccond', 2)
         // console.log(this.show)
@@ -2314,7 +2362,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".msg[data-v-20b6381c] {\n  padding: 5px;\n  border-radius: 5px;\n  margin: 5px 0;\n  color: #fff;\n  min-width: 80%;\n}\n.msg .time[data-v-20b6381c] {\n  font-size: 10px;\n}\n.msg.bot[data-v-20b6381c] {\n  background-color: #3679F7;\n  align-self: flex-start;\n}\n.msg.user[data-v-20b6381c] {\n  background-color: #1595C2;\n  align-self: flex-end;\n}", ""]);
+exports.push([module.i, ".msg[data-v-20b6381c] {\n  padding: 5px;\n  border-radius: 5px;\n  margin: 5px 0;\n  color: #fff;\n  min-width: 80%;\n}\n.msg .time[data-v-20b6381c] {\n  font-size: 10px;\n}\n.msg.bot[data-v-20b6381c] {\n  background-color: #3679F7;\n  align-self: flex-start;\n}\n.msg.user[data-v-20b6381c] {\n  background-color: #1595C2;\n  align-self: flex-end;\n}\n.msg .body[data-v-20b6381c] {\n  white-space: pre;\n}", ""]);
 
 // exports
 
@@ -2352,7 +2400,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.avatar[data-v-4cee36fa] {\n    background-size: cover;\n    background-position: 0 0;\n    background-repeat: no-repeat;\n    height: 30px;\n    width: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.avatar[data-v-4cee36fa] {\n    background-size: cover;\n    background-position: 0 0;\n    background-repeat: no-repeat;\n    height: 30px;\n    width: 30px;\n}\n.modal-body[data-v-4cee36fa] {\n    position: relative;\n    min-height: 230px;\n}\n", ""]);
 
 // exports
 
@@ -2371,7 +2419,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.typing[data-v-5c6e4691] {\n    width: 40px;\n    float: right;\n    border-radius: 5px;\n    background-color: #ccc;\n    line-height: 20px;\n    padding-left: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.typing[data-v-5c6e4691] {\n    width: 40px;\n    /*float: right;*/\n    border-radius: 5px;\n    background-color: #ccc;\n    line-height: 20px;\n    padding-left: 10px;\n}\n", ""]);
 
 // exports
 
@@ -20881,9 +20929,15 @@ var render = function () {
           _vm._m(0),
           _vm._v(" "),
           _c(
-            "h5",
+            "div",
             { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-            [_vm._v("Bot")]
+            [
+              _c("div", { staticClass: "h3" }, [_vm._v("Bot")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "small" }, [
+                _vm._v(_vm._s(_vm.typing ? "печатает..." : "в сети")),
+              ]),
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -33963,6 +34017,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/configs/answers.json":
+/*!*******************************************!*\
+  !*** ./resources/js/configs/answers.json ***!
+  \*******************************************/
+/*! exports provided: 0, 1, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"regexp\":\"адрес|address|улица|дом\",\"answer\":\"Площадь Мира, 2\"},{\"regexp\":\"телефон|номер|мобильн|городской|phone\",\"answer\":\"+380000000000\"}]");
+
+/***/ }),
+
 /***/ "./resources/js/templates.json":
 /*!*************************************!*\
   !*** ./resources/js/templates.json ***!
@@ -33992,8 +34057,8 @@ module.exports = JSON.parse("{\"key\":\"value\"}");
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OpenServer\domains\tg_chat\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OpenServer\domains\tg_chat\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\OpenServer\domains\tg-chat\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\OpenServer\domains\tg-chat\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

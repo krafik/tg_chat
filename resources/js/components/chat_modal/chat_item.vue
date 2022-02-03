@@ -44,5 +44,8 @@
             background-color: #1595C2;
             align-self: flex-end;
         }
+        .body {
+            white-space: pre;
+        }
     }
 </style>
