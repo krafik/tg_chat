@@ -2,7 +2,7 @@
 @section('title', 'home')
 @section('content')
     <test-tg></test-tg>
-    <chat-modal></chat-modal>
+    <chat_wrapper></chat_wrapper>
     <?
 //    use Telegram\Bot\Laravel\Facades\Telegram;
 //    $response = Telegram::getUpdates([-1]);
